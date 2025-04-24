@@ -23,6 +23,10 @@ COBJS=./hidapi/mac/hid.o
 LIBS=`pkg-config libusb-1.0 --libs` -framework CoreFoundation -framework IOKit
 endif
 
+ifeq ($(OS),Windows_NT)
+COBJS=./hidapi/windows/hid.o
+LIBS=  -lsetupapi -lhid
+endif
 
 he2325u: $(OBJS)
 	g++ -Wall -g $^ $(LIBS) -o he2325u
