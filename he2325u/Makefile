@@ -13,12 +13,15 @@ CC=gcc
 CXX=g++
 CPPOBJS=./he2325u.o
 OBJS=$(COBJS) $(CPPOBJS)
-CFLAGS+=-I./hidapi/hidapi -Wall -g -c `pkg-config libusb-1.0 --cflags`
+CFLAGS+=-I./hidapi/hidapi -Wall -g -c
+
 ifeq ($(UNAME), Linux)
+CFLAGS+=`pkg-config libusb-1.0 --cflags`
 COBJS=./hidapi/linux/hid.o
 LIBS=`pkg-config libusb-1.0 libudev --libs`
 endif
 ifeq ($(UNAME), Darwin)
+CFLAGS+=`pkg-config libusb-1.0 --cflags`
 COBJS=./hidapi/mac/hid.o
 LIBS=`pkg-config libusb-1.0 --libs` -framework CoreFoundation -framework IOKit
 endif
